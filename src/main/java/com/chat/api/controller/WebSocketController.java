@@ -23,7 +23,6 @@ public class WebSocketController {
 
 	@MessageMapping("/send/message")
 	public void sendMessage(MessageTemplate message){ 
-		System.out.println(message);
 		convoDetailsService.insertConvo(message);
 		this.template.convertAndSend("/message",  message);
 	}

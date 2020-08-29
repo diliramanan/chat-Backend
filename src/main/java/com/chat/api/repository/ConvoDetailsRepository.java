@@ -13,4 +13,5 @@ import com.chat.api.entity.MessageTemplate;
 public interface ConvoDetailsRepository extends MongoRepository<MessageTemplate, String> {
 	List<MessageTemplate> findByConvoKey(String convoKey);
 	List<MessageTemplate> findByDateBetween(Date startDate, Date endDate);
+	List<MessageTemplate> findByToUserAndLastSeen(String toUser, boolean lastSeen);
 }
