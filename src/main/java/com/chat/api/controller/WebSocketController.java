@@ -14,7 +14,7 @@ public class WebSocketController {
 	private final SimpMessagingTemplate template;
 
 	@Autowired
-	ConvoDetailsService convoDetailsService;
+	private ConvoDetailsService convoDetailsService;
 
 	@Autowired
 	WebSocketController(SimpMessagingTemplate template){

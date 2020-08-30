@@ -17,7 +17,7 @@ import com.chat.api.repository.ConvoDetailsRepository;
 public class ConvoDetailsService {
 
 	@Autowired
-	ConvoDetailsRepository convoDetailsRepository;
+	private ConvoDetailsRepository convoDetailsRepository;
 
 	public void insertConvo(MessageTemplate message) {
 		convoDetailsRepository.save(message);
@@ -25,13 +25,6 @@ public class ConvoDetailsService {
 
 	public List<MessageTemplate> getConvoBtwUsers(String convoKey, String toUser) {
 		List<MessageTemplate> lst = convoDetailsRepository.findByConvoKey(convoKey);
-		//		for (MessageTemplate messageTemplate : lst) { 
-		//			if(messageTemplate.getToUser().equals(toUser)) {
-		//				messageTemplate.setLastSeen(true); 
-		//			}
-		//			System.out.println("UPDATE messageTemplate:"+messageTemplate);
-		//			convoDetailsRepository.save(messageTemplate);
-		//		}
 		return lst;
 	}
 
@@ -39,8 +32,8 @@ public class ConvoDetailsService {
 		return convoDetailsRepository.findByDateBetween(new Date(), new Date());
 	}
 
-	public List<UnSeenMsg> findByToUserAndLastSeen(String user, boolean b) {
-		List<MessageTemplate> unSeenConvoList = convoDetailsRepository.findByToUserAndLastSeen(user, false);
+	public List<UnSeenMsg> findByToUserAndLastSeen(String user, boolean lastSeenFlg) {
+		List<MessageTemplate> unSeenConvoList = convoDetailsRepository.findByToUserAndLastSeen(user, lastSeenFlg);
 		HashMap<String, Integer> map = new HashMap<String,Integer>();
 		String fromUser = null;
 		for (MessageTemplate messageTemplate : unSeenConvoList) {
@@ -58,16 +51,13 @@ public class ConvoDetailsService {
 			unSeenMsg.setCount(entry.getValue());
 			unSeenMsgCountList.add(unSeenMsg);
 		}
-//		System.out.println("unSeenMsgCountList="+unSeenMsgCountList);
 		return unSeenMsgCountList;
 	}
 
-	public void updateUnseen(String convoKey, String toUser) {
-		List<MessageTemplate> lst = convoDetailsRepository.findUnseen(convoKey, toUser, false);
-		System.out.println("lst :"+lst);
+	public void updateUnseen(String convoKey, String toUser, boolean lastSeenFlg) {
+		List<MessageTemplate> lst = convoDetailsRepository.findUnseen(convoKey, toUser, lastSeenFlg);
 		for (MessageTemplate messageTemplate : lst) { 
-				messageTemplate.setLastSeen(true); 
-//			System.out.println("UPDATE messageTemplate:"+messageTemplate);
+			messageTemplate.setLastSeen(true); 
 			convoDetailsRepository.save(messageTemplate);
 		}
 	}
