@@ -63,12 +63,11 @@ public class ConvoDetailsService {
 	}
 
 	public void updateUnseen(String convoKey, String toUser) {
-		List<MessageTemplate> lst = convoDetailsRepository.findByConvoKey(convoKey);
+		List<MessageTemplate> lst = convoDetailsRepository.findUnseen(convoKey, toUser, false);
+		System.out.println("lst :"+lst);
 		for (MessageTemplate messageTemplate : lst) { 
-			if(messageTemplate.getToUser().equals(toUser)) {
 				messageTemplate.setLastSeen(true); 
-			}
-			System.out.println("UPDATE messageTemplate:"+messageTemplate);
+//			System.out.println("UPDATE messageTemplate:"+messageTemplate);
 			convoDetailsRepository.save(messageTemplate);
 		}
 	}
