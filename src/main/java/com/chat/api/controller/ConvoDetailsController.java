@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chat.api.entity.MessageTemplate;
@@ -37,6 +38,12 @@ public class ConvoDetailsController {
 	@GetMapping("/getUnseenConvo/{user}/{convoKey}")
 	public  List<UnSeenMsg> getUnseenConvo(@PathVariable String user, @PathVariable String convoKey) {
 		return convoDetailsService.findByToUserAndLastSeen(user, false);
+	}
+	
+	@PutMapping("/updateUnseenConvo/{convoKey}/{user}")
+	public void updateUnseen(@PathVariable String convoKey, @PathVariable String user) {
+		System.out.println("updateUnseen: convoKey:"+convoKey+ " user:"+user);
+		convoDetailsService.updateUnseen(convoKey,user);
 	}
 
 }

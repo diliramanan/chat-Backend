@@ -25,13 +25,13 @@ public class ConvoDetailsService {
 
 	public List<MessageTemplate> getConvoBtwUsers(String convoKey, String toUser) {
 		List<MessageTemplate> lst = convoDetailsRepository.findByConvoKey(convoKey);
-		for (MessageTemplate messageTemplate : lst) { 
-			if(messageTemplate.getToUser().equals(toUser)) {
-				messageTemplate.setLastSeen(true); 
-			}
-			System.out.println("UPDATE messageTemplate:"+messageTemplate);
-			convoDetailsRepository.save(messageTemplate);
-		}
+		//		for (MessageTemplate messageTemplate : lst) { 
+		//			if(messageTemplate.getToUser().equals(toUser)) {
+		//				messageTemplate.setLastSeen(true); 
+		//			}
+		//			System.out.println("UPDATE messageTemplate:"+messageTemplate);
+		//			convoDetailsRepository.save(messageTemplate);
+		//		}
 		return lst;
 	}
 
@@ -58,8 +58,19 @@ public class ConvoDetailsService {
 			unSeenMsg.setCount(entry.getValue());
 			unSeenMsgCountList.add(unSeenMsg);
 		}
-		System.out.println("unSeenMsgCountList="+unSeenMsgCountList);
+//		System.out.println("unSeenMsgCountList="+unSeenMsgCountList);
 		return unSeenMsgCountList;
+	}
+
+	public void updateUnseen(String convoKey, String toUser) {
+		List<MessageTemplate> lst = convoDetailsRepository.findByConvoKey(convoKey);
+		for (MessageTemplate messageTemplate : lst) { 
+			if(messageTemplate.getToUser().equals(toUser)) {
+				messageTemplate.setLastSeen(true); 
+			}
+			System.out.println("UPDATE messageTemplate:"+messageTemplate);
+			convoDetailsRepository.save(messageTemplate);
+		}
 	}
 
 }
