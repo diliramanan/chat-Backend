@@ -23,6 +23,11 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping("/")
+	public String welcome() {
+		return "Weclome to Chat API";
+	}
 
 	@GetMapping("/getAllUsers")
 	public List<User> getAllEvents() {
