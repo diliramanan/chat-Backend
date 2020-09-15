@@ -24,9 +24,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/")
+	@GetMapping("/error")
 	public String welcome() {
-		return "Weclome to Chat API";
+		return "Weclome to Chat API, Invalid request";
 	}
 
 	@GetMapping("/getAllUsers")
